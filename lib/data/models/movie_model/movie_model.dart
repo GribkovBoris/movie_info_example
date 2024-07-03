@@ -7,19 +7,19 @@ part 'movie_model.g.dart';
 class MovieModel {
   final int id;
   final String title;
-  final String overview;
+  final String? overview;
 
   @JsonKey(name: 'poster_path')
   final String? posterPath;
 
   @JsonKey(name: 'vote_average')
-  final double voteAverage;
+  final double? voteAverage;
 
   @JsonKey(name: 'release_date')
-  final String releaseDate;
+  final String? releaseDate;
 
   @JsonKey(name: 'genre_ids')
-  final List<int> genreIds;
+  final List<int>? genreIds;
 
   MovieModel({
     required this.id,

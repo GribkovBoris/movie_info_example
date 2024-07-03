@@ -23,11 +23,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             emit(const SearchState.loaded(movies: []));
           }
           emit(const SearchState.loading());
-          print('start search');
           final failureOrMovies = await searchMovies(
             SearchMoviesParams(query: event.query),
           );
-          print('end search');
           failureOrMovies.fold(
             (failure) => emit(
               SearchState.error(message: _mapFailureToMessage(failure)),

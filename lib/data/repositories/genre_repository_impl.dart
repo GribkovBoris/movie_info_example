@@ -25,7 +25,7 @@ class GenreRepositoryImpl implements GenreRepository {
     } on NetworkException catch (_) {
       return Left(NetworkFailure());
     } catch (e) {
-      return Left(NetworkFailure());
+      return Left(OtherFailure());
     }
   }
 }

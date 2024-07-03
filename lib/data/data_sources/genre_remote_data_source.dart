@@ -21,7 +21,6 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDataSource {
   @override
   Future<List<GenreModel>> getGenres() async {
     final url = TmdbConstants.getGenresUrl();
-    print(url);
     final response = await httpClient.get<dynamic>(
       url,
       queryParameters: {

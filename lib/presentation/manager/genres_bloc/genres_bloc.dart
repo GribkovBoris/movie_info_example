@@ -17,7 +17,6 @@ class GenresBloc extends Bloc<GenresEvent, GenresState> {
       switch (event) {
         case _GenresLoadEvent():
           emit(const GenresState.loading());
-          print('GenresBloc');
           final failureOrMovies = await getGenres();
           failureOrMovies.fold(
             (failure) => emit(GenresState.error(message: failure.toString())),

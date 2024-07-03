@@ -64,67 +64,88 @@ class MovieDetailsPage extends StatelessWidget {
                     movie.title,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  const SizedBox(height: 8),
-                  Text('$labelRating: ${movie.voteAverage.toStringAsFixed(1)}'),
-                  const SizedBox(height: 8),
-                  Text(
-                      '$labelReleaseDate: ${movie.releaseDate.replaceAll('-', '.')}'),
-                  const SizedBox(height: 8),
-                  BlocBuilder<GenresBloc, GenresState>(
-                    builder: (context, state) {
-                      return Wrap(
-                        children: [
-                          const Text('$labelGenres: '),
-                          state.when(
-                            initial: () {
-                              return const SizedBox.shrink();
-                            },
-                            loading: () =>
-                                const Center(child: CircularIndicator()),
-                            loaded: (genres) {
-                              final genreStrings = <String>[];
-                              movie.genreIds.forEach(
-                                (genreId) {
-                                  genres.forEach(
-                                    (genre) {
-                                      if (genre.id == genreId) {
-                                        genreStrings.add(genre.name);
-                                      }
+                  if (movie.voteAverage != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                          '$labelRating: ${movie.voteAverage!.toStringAsFixed(1)}'),
+                    ),
+                  if (movie.releaseDate != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                          '$labelReleaseDate: ${movie.releaseDate!.replaceAll('-', '.')}'),
+                    ),
+                  if (movie.genreIds != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: BlocBuilder<GenresBloc, GenresState>(
+                        builder: (context, state) {
+                          return Wrap(
+                            children: [
+                              const Text('$labelGenres: '),
+                              state.when(
+                                initial: () {
+                                  return const SizedBox.shrink();
+                                },
+                                loading: () =>
+                                    const Center(child: CircularIndicator()),
+                                loaded: (genres) {
+                                  final genreStrings = <String>[];
+                                  movie.genreIds!.forEach(
+                                    (genreId) {
+                                      genres.forEach(
+                                        (genre) {
+                                          if (genre.id == genreId) {
+                                            genreStrings.add(genre.name);
+                                          }
+                                        },
+                                      );
                                     },
                                   );
+                                  return Wrap(
+                                    children: [
+                                      ...genreStrings.map(
+                                        (e) => Text(
+                                            '$e${genreStrings.last == e ? '' : ', '}'),
+                                      ),
+                                    ],
+                                  );
                                 },
-                              );
-                              return Wrap(
-                                children: [
-                                  ...genreStrings.map(
-                                    (e) => Text(
-                                        '$e${genreStrings.last == e ? '' : ', '}'),
-                                  ),
-                                ],
-                              );
-                            },
-                            error: (message) {
-                              return WarningWithRefresh(
-                                onRefreshPressed: () {
-                                  context.read<GenresBloc>().add(
-                                        const GenresEvent.load(),
-                                      );
+                                error: (message) {
+                                  return WarningWithRefresh(
+                                    onRefreshPressed: () {
+                                      context.read<GenresBloc>().add(
+                                            const GenresEvent.load(),
+                                          );
+                                    },
+                                    message: labelFailedToLoad,
+                                  );
                                 },
-                                message: labelFailedToLoad,
-                              );
-                            },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  if (movie.overview != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Text(
+                            '$labelOverview',
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                        ],
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    '$labelOverview',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(movie.overview),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(movie.overview!),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),

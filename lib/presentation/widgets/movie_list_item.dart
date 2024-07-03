@@ -77,11 +77,14 @@ class MovieListItem extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '$labelRating: ${movie.voteAverage.toStringAsFixed(1)}',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                    if (movie.voteAverage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          '$labelRating: ${movie.voteAverage!.toStringAsFixed(1)}',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
                   ],
                 ),
               ),

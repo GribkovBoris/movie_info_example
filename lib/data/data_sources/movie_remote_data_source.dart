@@ -23,13 +23,11 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   @override
   Future<List<MovieModel>> getPopularMovies() async {
     final url = TmdbConstants.getPopularMoviesUrl();
-    print(url);
     final response = await httpClient.get<dynamic>(
       url,
       queryParameters: _getBasicQueryParams(),
       headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
     );
-    print(response.data);
     if (response.statusCode == 200) {
       return MovieModel.listFromJson(response.data['results'] as List<dynamic>);
     } else {
@@ -39,9 +37,6 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> searchMovies(String query) async {
-    print('searchMovies(String query)');
-    print('url: ${TmdbConstants.searchMoviesUrl()}');
-
     final response = await httpClient.get<dynamic>(
       TmdbConstants.searchMoviesUrl(),
       queryParameters: {
@@ -50,21 +45,21 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
       },
       headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
     );
-    print('response: ${response}');
 
     if (response.statusCode == 200) {
       final results = response.data['results'] as List<dynamic>;
-      final movies = results.map((movie) {
-        final movieMap = movie as Map<String, dynamic>;
-        try{
-          final movieEntity = MovieModel.fromJson(movieMap);
-          return movieEntity;
-        } catch (e) {
-          print('movie: $movie');
-          print('movieMap: $movieMap');
-          rethrow;
-        }
-      }).toList();
+      final movies = <MovieModel>[];
+      results.forEach(
+        (movie) {
+          try {
+            final movieMap = movie as Map<String, dynamic>;
+            final movieEntity = MovieModel.fromJson(movieMap);
+            movies.add(movieEntity);
+          } catch (_) {
+            // If the movie details has no required fields - skip it
+          }
+        },
+      );
       return movies;
     } else {
       throw NetworkException();

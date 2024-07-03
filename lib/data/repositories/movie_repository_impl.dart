@@ -20,7 +20,7 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final remoteMovies = await remoteDataSource.getPopularMovies();
       return Right(remoteMovies.map((e) => e.toEntity()).toList());
-    } on NetworkException catch (error) {
+    } on NetworkException catch (_) {
       return Left(NetworkFailure());
     } catch (error) {
       return Left(OtherFailure());
@@ -32,7 +32,7 @@ class MovieRepositoryImpl implements MovieRepository {
     try {
       final remoteMovies = await remoteDataSource.searchMovies(query);
       return Right(remoteMovies.map((e) => e.toEntity()).toList());
-    } on NetworkException catch (error) {
+    } on NetworkException catch (_) {
       return Left(NetworkFailure());
     } catch (error) {
       return Left(OtherFailure());
