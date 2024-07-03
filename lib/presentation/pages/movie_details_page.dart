@@ -81,7 +81,7 @@ class MovieDetailsPage extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 8.0),
                       child: _genres(movie.genreIds!),
                     ),
-                  if (movie.overview != null)
+                  if (movie.overview != null && movie.overview!.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
