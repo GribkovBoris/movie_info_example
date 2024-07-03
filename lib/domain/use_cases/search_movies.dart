@@ -6,8 +6,9 @@ import 'package:movie_info/domain/use_cases/use_case.dart';
 
 class SearchMoviesParams {
   final String query;
+  final int page;
 
-  SearchMoviesParams({required this.query});
+  SearchMoviesParams({required this.query, this.page = 1});
 }
 
 class SearchMovies implements UseCase<MoviesEntity, SearchMoviesParams> {
@@ -17,6 +18,6 @@ class SearchMovies implements UseCase<MoviesEntity, SearchMoviesParams> {
 
   @override
   Future<Either<Failure, MoviesEntity>> call(SearchMoviesParams params) async {
-    return await repository.searchMovies(params.query);
+    return await repository.searchMovies(params.query, page: params.page);
   }
 }

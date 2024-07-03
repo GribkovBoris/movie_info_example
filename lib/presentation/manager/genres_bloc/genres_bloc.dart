@@ -3,11 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_info/domain/entities/genres_entity.dart';
 import 'package:movie_info/domain/use_cases/get_genres_use_case.dart';
 
-part 'genres_event.dart';
-
-part 'genres_state.dart';
-
 part 'genres_bloc.freezed.dart';
+part 'genres_event.dart';
+part 'genres_state.dart';
 
 class GenresBloc extends Bloc<GenresEvent, GenresState> {
   final GetGenresUseCase getGenres;

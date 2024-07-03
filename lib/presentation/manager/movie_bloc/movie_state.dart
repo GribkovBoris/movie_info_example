@@ -5,7 +5,7 @@ abstract class MovieState with _$MovieState {
   const factory MovieState.initial() = _MovieInitialState;
 
   const factory MovieState.loading({
-     List<MovieEntity>? lastMovies,
+    List<MovieEntity>? lastMovies,
   }) = _MovieLoadingState;
 
   const factory MovieState.loaded({

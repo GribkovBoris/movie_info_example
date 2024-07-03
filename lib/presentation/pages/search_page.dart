@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_info/domain/entities/movie_entity.dart';
 import 'package:movie_info/presentation/manager/search_bloc/search_bloc.dart';
 import 'package:movie_info/presentation/pages/movie_details_page.dart';
 import 'package:movie_info/presentation/widgets/circular_indicator.dart';
@@ -40,11 +41,17 @@ class SearchPage extends StatelessWidget {
               builder: (context, state) {
                 return state.when(
                   initial: () => const Text(''),
-                  loading: () {
-                    return const Center(child: CircularIndicator(size: 60));
+                  loading: (lastMovies) {
+                    if (lastMovies != null) {
+                      return buildMoviesList(lastMovies, searchBloc,
+                          finalizedMoviesList: false);
+                    } else {
+                      return const Center(child: CircularIndicator(size: 60));
+                    }
                   },
-                  loaded: (movies) {
-                    return MoviesList(movies: movies);
+                  loaded: (query, movies, finalizedMoviesList) {
+                    return buildMoviesList(movies, searchBloc,
+                        finalizedMoviesList: finalizedMoviesList);
                   },
                   error: (message) => WarningWithRefresh(
                     direction: Axis.vertical,
@@ -60,6 +67,17 @@ class SearchPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  MoviesList buildMoviesList(List<MovieEntity> movies, SearchBloc searchBloc,
+      {required bool finalizedMoviesList}) {
+    return MoviesList(
+      movies: movies,
+      onOverscroll: () async {
+        searchBloc.add(const SearchEvent.loadMore());
+      },
+      finalizedMoviesList: finalizedMoviesList,
     );
   }
 }

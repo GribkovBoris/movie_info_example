@@ -2,9 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:movie_info/core/errors/exceptions.dart';
 import 'package:movie_info/core/errors/failures.dart';
 import 'package:movie_info/data/data_sources/movie_remote_data_source.dart';
-import 'package:movie_info/data/models/movie_model/movie_model.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
-import 'package:movie_info/domain/repositories/genres_repository.dart';
 import 'package:movie_info/domain/repositories/movie_repository.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
@@ -28,7 +26,8 @@ class MovieRepositoryImpl implements MovieRepository {
   Future<Either<Failure, MoviesEntity>> searchMovies(String query,
       {int page = 1}) async {
     try {
-      final remoteMovies = await remoteDataSource.searchMovies(query);
+      final remoteMovies =
+          await remoteDataSource.searchMovies(query, page: page);
       return Right(remoteMovies.toEntity());
     } on NetworkException catch (_) {
       return Left(NetworkFailure());

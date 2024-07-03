@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
-import 'package:movie_info/presentation/manager/movie_bloc/movie_bloc.dart';
 import 'package:movie_info/presentation/pages/home_page.dart';
 import 'package:movie_info/presentation/widgets/circular_indicator.dart';
 import 'package:movie_info/presentation/widgets/movie_list_item.dart';

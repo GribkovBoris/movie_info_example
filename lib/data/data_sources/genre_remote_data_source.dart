@@ -29,11 +29,11 @@ class GenreRemoteDataSourceImpl implements GenreRemoteDataSource {
       headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
     );
     if (response.statusCode == 200) {
-      final genresModel = GenresModel.fromJson(response.data as Map<String, dynamic>);
+      final genresModel =
+          GenresModel.fromJson(response.data as Map<String, dynamic>);
       return genresModel.genres;
     } else {
       throw NetworkException();
     }
   }
-
 }

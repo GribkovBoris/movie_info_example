@@ -20,10 +20,10 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     required this.apiRequestParams,
   });
 
-  MoviesModel _parseMoviesResponse(HttpResponse<dynamic> response){
+  MoviesModel _parseMoviesResponse(HttpResponse<dynamic> response) {
     if (response.statusCode == 200) {
       final moviesModel =
-      MoviesModel.fromJson(response.data as Map<String, dynamic>);
+          MoviesModel.fromJson(response.data as Map<String, dynamic>);
       return moviesModel;
     } else {
       throw NetworkException();

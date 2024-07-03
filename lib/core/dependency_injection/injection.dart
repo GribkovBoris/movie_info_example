@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:dio/dio.dart';
 import 'package:movie_info/core/network/dio_http_client.dart';
 import 'package:movie_info/core/network/http_client.dart';
 import 'package:movie_info/core/network/movies_api_request_params.dart';

@@ -13,7 +13,7 @@ class HttpResponse<T> {
     this.data,
     this.statusCode,
     this.statusMessage,
-  }) ;
+  });
 
   T? data;
   int? statusCode;

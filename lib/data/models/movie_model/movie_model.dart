@@ -20,7 +20,7 @@ class MoviesModel {
     final totalPages = json['total_pages'] as int;
     final movies = <MovieModel>[];
     results.forEach(
-          (movie) {
+      (movie) {
         try {
           final movieMap = movie as Map<String, dynamic>;
           final movieEntity = MovieModel.fromJson(movieMap);

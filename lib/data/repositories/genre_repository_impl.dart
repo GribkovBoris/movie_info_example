@@ -15,11 +15,12 @@ class GenreRepositoryImpl implements GenreRepository {
   @override
   Future<Either<Failure, List<GenreEntity>>> getGenres() async {
     try {
-      if(genres != null){
+      if (genres != null) {
         return Right(genres!);
       }
       final genreModels = await remoteDataSource.getGenres();
-      final resultGenres = genreModels.map((model) => model.toEntity()).toList();
+      final resultGenres =
+          genreModels.map((model) => model.toEntity()).toList();
       genres = resultGenres;
       return Right(resultGenres);
     } on NetworkException catch (_) {

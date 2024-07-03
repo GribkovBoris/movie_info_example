@@ -18,40 +18,32 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final movieBloc = context.read<MovieBloc>();
     return Scaffold(
       appBar: AppBar(title: const Text(labelPopularMovies)),
       body: BlocBuilder<MovieBloc, MovieState>(
+        bloc: movieBloc,
         builder: (context, state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
             loading: (movies) {
-              if(movies != null){
-                return MoviesList(
-                  movies: movies,
-                  onOverscroll: () async {
-                    context.read<MovieBloc>().add(const MovieEvent.loadMore());
-                  },
-                  finalizedMoviesList: false,
-                );
-              }else {
+              if (movies != null) {
+                return buildMoviesList(movies, movieBloc,
+                    finalizedMoviesList: false);
+              } else {
                 return const Center(child: CircularIndicator(size: 60));
               }
             },
             loaded: (movies, finalizedMoviesList) {
-              return MoviesList(
-                movies: movies,
-                onOverscroll: () async {
-                  context.read<MovieBloc>().add(const MovieEvent.loadMore());
-                },
-                finalizedMoviesList: finalizedMoviesList,
-              );
+              return buildMoviesList(movies, movieBloc,
+                  finalizedMoviesList: finalizedMoviesList);
             },
             error: (message) => Center(
               child: WarningWithRefresh(
                 direction: Axis.vertical,
                 iconSize: 40,
                 onRefreshPressed: () {
-                  context.read<MovieBloc>().add(const MovieEvent.loadPopular());
+                  movieBloc.add(const MovieEvent.loadPopular());
                 },
                 message: labelFailedToLoad,
               ),
@@ -59,6 +51,17 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
+    );
+  }
+
+  MoviesList buildMoviesList(List<MovieEntity> movies, MovieBloc movieBloc,
+      {required bool finalizedMoviesList}) {
+    return MoviesList(
+      movies: movies,
+      onOverscroll: () async {
+        movieBloc.add(const MovieEvent.loadMore());
+      },
+      finalizedMoviesList: finalizedMoviesList,
     );
   }
 }

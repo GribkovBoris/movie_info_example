@@ -26,6 +26,7 @@ mixin _$MovieState {
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -45,6 +46,7 @@ mixin _$MovieState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_MovieInitialState value) initial,
@@ -53,6 +55,7 @@ mixin _$MovieState {
     required TResult Function(_MovieErrorState value) error,
   }) =>
       throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_MovieInitialState value)? initial,
@@ -84,9 +87,9 @@ class _$MovieStateCopyWithImpl<$Res, $Val extends MovieState>
     implements $MovieStateCopyWith<$Res> {
   _$MovieStateCopyWithImpl(this._value, this._then);
 
-  // ignore: unused_field
+// ignore: unused_field
   final $Val _value;
-  // ignore: unused_field
+// ignore: unused_field
   final $Res Function($Val) _then;
 }
 
@@ -251,7 +254,7 @@ class _$MovieLoadingStateImpl implements _MovieLoadingState {
     final value = _lastMovies;
     if (value == null) return null;
     if (_lastMovies is EqualUnmodifiableListView) return _lastMovies;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
@@ -417,7 +420,7 @@ class _$MovieLoadedStateImpl implements _MovieLoadedState {
   @override
   List<MovieEntity> get movies {
     if (_movies is EqualUnmodifiableListView) return _movies;
-    // ignore: implicit_dynamic_type
+// ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_movies);
   }
 

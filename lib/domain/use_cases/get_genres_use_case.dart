@@ -8,5 +8,6 @@ class GetGenresUseCase {
 
   GetGenresUseCase(this.genreRepository);
 
-  Future<Either<Failure, List<GenreEntity>>> call() => genreRepository.getGenres();
+  Future<Either<Failure, List<GenreEntity>>> call() =>
+      genreRepository.getGenres();
 }

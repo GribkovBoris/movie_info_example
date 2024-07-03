@@ -3,7 +3,7 @@ part of 'movie_bloc.dart';
 sealed class MovieEvent extends Equatable {
   const MovieEvent();
 
-  const factory MovieEvent.loadPopular({int page}) = _MoviesLoadPopularEvent;
+  const factory MovieEvent.loadPopular() = _MoviesLoadPopularEvent;
 
   const factory MovieEvent.loadMore() = _MoviesLoadMoreEvent;
 
@@ -12,12 +12,7 @@ sealed class MovieEvent extends Equatable {
 }
 
 class _MoviesLoadPopularEvent extends MovieEvent {
-  final int page;
-
-  const _MoviesLoadPopularEvent({this.page = 1});
-
-  @override
-  List<Object> get props => [page];
+  const _MoviesLoadPopularEvent();
 }
 
 class _MoviesLoadMoreEvent extends MovieEvent {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_info/presentation/manager/genres_bloc/genres_bloc.dart';
 import 'package:movie_info/presentation/manager/movie_bloc/movie_bloc.dart';
 import 'package:movie_info/presentation/manager/search_bloc/search_bloc.dart';
+
 import 'core/dependency_injection/injection.dart' as di;
 import 'presentation/pages/home_page.dart';
 import 'presentation/pages/search_page.dart';
@@ -17,8 +18,7 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) {
-          return di.locator<MovieBloc>()
-            ..add(const MovieEvent.loadPopular(page: 1));
+          return di.locator<MovieBloc>()..add(const MovieEvent.loadPopular());
         }),
         BlocProvider(create: (_) => di.locator<SearchBloc>()),
         BlocProvider(create: (_) {
