@@ -3,6 +3,49 @@ import 'package:movie_info/domain/entities/movie_entity.dart';
 
 part 'movie_model.g.dart';
 
+class MoviesModel {
+  final List<MovieModel> movies;
+  final int page;
+  final int totalPages;
+
+  MoviesModel({
+    required this.movies,
+    required this.page,
+    required this.totalPages,
+  });
+
+  factory MoviesModel.fromJson(Map<String, dynamic> json) {
+    final results = json['results'] as List<dynamic>;
+    final page = json['page'] as int;
+    final totalPages = json['total_pages'] as int;
+    final movies = <MovieModel>[];
+    results.forEach(
+          (movie) {
+        try {
+          final movieMap = movie as Map<String, dynamic>;
+          final movieEntity = MovieModel.fromJson(movieMap);
+          movies.add(movieEntity);
+        } catch (_) {
+          // If the movie details has no required fields - skip it
+        }
+      },
+    );
+    return MoviesModel(
+      movies: movies,
+      page: page,
+      totalPages: totalPages,
+    );
+  }
+
+  MoviesEntity toEntity() {
+    return MoviesEntity(
+      movies: movies.map((genreModel) => genreModel.toEntity()).toList(),
+      page: page,
+      totalPages: totalPages,
+    );
+  }
+}
+
 @JsonSerializable()
 class MovieModel {
   final int id;

@@ -31,10 +31,7 @@ void init() {
     () => GenreRepositoryImpl(remoteDataSource: locator()),
   );
   locator.registerLazySingleton<MovieRepository>(
-    () => MovieRepositoryImpl(
-      remoteDataSource: locator(),
-      genreRepository: locator(),
-    ),
+    () => MovieRepositoryImpl(remoteDataSource: locator()),
   );
 
   // HTTP client

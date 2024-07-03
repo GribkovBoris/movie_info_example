@@ -30,7 +30,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             (failure) => emit(
               SearchState.error(message: _mapFailureToMessage(failure)),
             ),
-            (movies) => emit(SearchState.loaded(movies: movies)),
+            (moviesEntity) =>
+                emit(SearchState.loaded(movies: moviesEntity.movies)),
           );
       }
     });

@@ -79,54 +79,7 @@ class MovieDetailsPage extends StatelessWidget {
                   if (movie.genreIds != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: BlocBuilder<GenresBloc, GenresState>(
-                        builder: (context, state) {
-                          return Wrap(
-                            children: [
-                              const Text('$labelGenres: '),
-                              state.when(
-                                initial: () {
-                                  return const SizedBox.shrink();
-                                },
-                                loading: () =>
-                                    const Center(child: CircularIndicator()),
-                                loaded: (genres) {
-                                  final genreStrings = <String>[];
-                                  movie.genreIds!.forEach(
-                                    (genreId) {
-                                      genres.forEach(
-                                        (genre) {
-                                          if (genre.id == genreId) {
-                                            genreStrings.add(genre.name);
-                                          }
-                                        },
-                                      );
-                                    },
-                                  );
-                                  return Wrap(
-                                    children: [
-                                      ...genreStrings.map(
-                                        (e) => Text(
-                                            '$e${genreStrings.last == e ? '' : ', '}'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                                error: (message) {
-                                  return WarningWithRefresh(
-                                    onRefreshPressed: () {
-                                      context.read<GenresBloc>().add(
-                                            const GenresEvent.load(),
-                                          );
-                                    },
-                                    message: labelFailedToLoad,
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                      child: _genres(movie.genreIds!),
                     ),
                   if (movie.overview != null)
                     Column(
@@ -152,6 +105,55 @@ class MovieDetailsPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _genres(List<int> genreIds) {
+    return BlocBuilder<GenresBloc, GenresState>(
+      builder: (context, state) {
+        return Wrap(
+          children: [
+            const Text('$labelGenres: '),
+            state.when(
+              initial: () {
+                return const SizedBox.shrink();
+              },
+              loading: () => const Center(child: CircularIndicator()),
+              loaded: (genres) {
+                final genreStrings = <String>[];
+                genreIds.forEach(
+                  (genreId) {
+                    genres.forEach(
+                      (genre) {
+                        if (genre.id == genreId) {
+                          genreStrings.add(genre.name);
+                        }
+                      },
+                    );
+                  },
+                );
+                return Wrap(
+                  children: [
+                    ...genreStrings.map(
+                      (e) => Text('$e${genreStrings.last == e ? '' : ', '}'),
+                    ),
+                  ],
+                );
+              },
+              error: (message) {
+                return WarningWithRefresh(
+                  onRefreshPressed: () {
+                    context.read<GenresBloc>().add(
+                          const GenresEvent.load(),
+                        );
+                  },
+                  message: labelFailedToLoad,
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

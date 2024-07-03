@@ -19,24 +19,28 @@ mixin _$MovieState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<MovieEntity> movies) loaded,
+    required TResult Function(List<MovieEntity>? lastMovies) loading,
+    required TResult Function(
+            List<MovieEntity> movies, bool finalizedMoviesList)
+        loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<MovieEntity> movies)? loaded,
+    TResult? Function(List<MovieEntity>? lastMovies)? loading,
+    TResult? Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<MovieEntity> movies)? loaded,
+    TResult Function(List<MovieEntity>? lastMovies)? loading,
+    TResult Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -125,8 +129,10 @@ class _$MovieInitialStateImpl implements _MovieInitialState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<MovieEntity> movies) loaded,
+    required TResult Function(List<MovieEntity>? lastMovies) loading,
+    required TResult Function(
+            List<MovieEntity> movies, bool finalizedMoviesList)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -136,8 +142,9 @@ class _$MovieInitialStateImpl implements _MovieInitialState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<MovieEntity> movies)? loaded,
+    TResult? Function(List<MovieEntity>? lastMovies)? loading,
+    TResult? Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -147,8 +154,9 @@ class _$MovieInitialStateImpl implements _MovieInitialState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<MovieEntity> movies)? loaded,
+    TResult Function(List<MovieEntity>? lastMovies)? loading,
+    TResult Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -205,6 +213,8 @@ abstract class _$$MovieLoadingStateImplCopyWith<$Res> {
   factory _$$MovieLoadingStateImplCopyWith(_$MovieLoadingStateImpl value,
           $Res Function(_$MovieLoadingStateImpl) then) =
       __$$MovieLoadingStateImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<MovieEntity>? lastMovies});
 }
 
 /// @nodoc
@@ -214,60 +224,99 @@ class __$$MovieLoadingStateImplCopyWithImpl<$Res>
   __$$MovieLoadingStateImplCopyWithImpl(_$MovieLoadingStateImpl _value,
       $Res Function(_$MovieLoadingStateImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lastMovies = freezed,
+  }) {
+    return _then(_$MovieLoadingStateImpl(
+      lastMovies: freezed == lastMovies
+          ? _value._lastMovies
+          : lastMovies // ignore: cast_nullable_to_non_nullable
+              as List<MovieEntity>?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$MovieLoadingStateImpl implements _MovieLoadingState {
-  const _$MovieLoadingStateImpl();
+  const _$MovieLoadingStateImpl({final List<MovieEntity>? lastMovies})
+      : _lastMovies = lastMovies;
+
+  final List<MovieEntity>? _lastMovies;
+  @override
+  List<MovieEntity>? get lastMovies {
+    final value = _lastMovies;
+    if (value == null) return null;
+    if (_lastMovies is EqualUnmodifiableListView) return _lastMovies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'MovieState.loading()';
+    return 'MovieState.loading(lastMovies: $lastMovies)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$MovieLoadingStateImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$MovieLoadingStateImpl &&
+            const DeepCollectionEquality()
+                .equals(other._lastMovies, _lastMovies));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_lastMovies));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MovieLoadingStateImplCopyWith<_$MovieLoadingStateImpl> get copyWith =>
+      __$$MovieLoadingStateImplCopyWithImpl<_$MovieLoadingStateImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<MovieEntity> movies) loaded,
+    required TResult Function(List<MovieEntity>? lastMovies) loading,
+    required TResult Function(
+            List<MovieEntity> movies, bool finalizedMoviesList)
+        loaded,
     required TResult Function(String message) error,
   }) {
-    return loading();
+    return loading(lastMovies);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<MovieEntity> movies)? loaded,
+    TResult? Function(List<MovieEntity>? lastMovies)? loading,
+    TResult? Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
-    return loading?.call();
+    return loading?.call(lastMovies);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<MovieEntity> movies)? loaded,
+    TResult Function(List<MovieEntity>? lastMovies)? loading,
+    TResult Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading();
+      return loading(lastMovies);
     }
     return orElse();
   }
@@ -311,7 +360,13 @@ class _$MovieLoadingStateImpl implements _MovieLoadingState {
 }
 
 abstract class _MovieLoadingState implements MovieState {
-  const factory _MovieLoadingState() = _$MovieLoadingStateImpl;
+  const factory _MovieLoadingState({final List<MovieEntity>? lastMovies}) =
+      _$MovieLoadingStateImpl;
+
+  List<MovieEntity>? get lastMovies;
+  @JsonKey(ignore: true)
+  _$$MovieLoadingStateImplCopyWith<_$MovieLoadingStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -320,7 +375,7 @@ abstract class _$$MovieLoadedStateImplCopyWith<$Res> {
           $Res Function(_$MovieLoadedStateImpl) then) =
       __$$MovieLoadedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MovieEntity> movies});
+  $Res call({List<MovieEntity> movies, bool finalizedMoviesList});
 }
 
 /// @nodoc
@@ -335,12 +390,17 @@ class __$$MovieLoadedStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? movies = null,
+    Object? finalizedMoviesList = null,
   }) {
     return _then(_$MovieLoadedStateImpl(
       movies: null == movies
           ? _value._movies
           : movies // ignore: cast_nullable_to_non_nullable
               as List<MovieEntity>,
+      finalizedMoviesList: null == finalizedMoviesList
+          ? _value.finalizedMoviesList
+          : finalizedMoviesList // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -348,7 +408,9 @@ class __$$MovieLoadedStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MovieLoadedStateImpl implements _MovieLoadedState {
-  const _$MovieLoadedStateImpl({required final List<MovieEntity> movies})
+  const _$MovieLoadedStateImpl(
+      {required final List<MovieEntity> movies,
+      required this.finalizedMoviesList})
       : _movies = movies;
 
   final List<MovieEntity> _movies;
@@ -360,8 +422,11 @@ class _$MovieLoadedStateImpl implements _MovieLoadedState {
   }
 
   @override
+  final bool finalizedMoviesList;
+
+  @override
   String toString() {
-    return 'MovieState.loaded(movies: $movies)';
+    return 'MovieState.loaded(movies: $movies, finalizedMoviesList: $finalizedMoviesList)';
   }
 
   @override
@@ -369,12 +434,14 @@ class _$MovieLoadedStateImpl implements _MovieLoadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MovieLoadedStateImpl &&
-            const DeepCollectionEquality().equals(other._movies, _movies));
+            const DeepCollectionEquality().equals(other._movies, _movies) &&
+            (identical(other.finalizedMoviesList, finalizedMoviesList) ||
+                other.finalizedMoviesList == finalizedMoviesList));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_movies));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_movies), finalizedMoviesList);
 
   @JsonKey(ignore: true)
   @override
@@ -387,35 +454,39 @@ class _$MovieLoadedStateImpl implements _MovieLoadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<MovieEntity> movies) loaded,
+    required TResult Function(List<MovieEntity>? lastMovies) loading,
+    required TResult Function(
+            List<MovieEntity> movies, bool finalizedMoviesList)
+        loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(movies);
+    return loaded(movies, finalizedMoviesList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<MovieEntity> movies)? loaded,
+    TResult? Function(List<MovieEntity>? lastMovies)? loading,
+    TResult? Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(movies);
+    return loaded?.call(movies, finalizedMoviesList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<MovieEntity> movies)? loaded,
+    TResult Function(List<MovieEntity>? lastMovies)? loading,
+    TResult Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(movies);
+      return loaded(movies, finalizedMoviesList);
     }
     return orElse();
   }
@@ -459,10 +530,12 @@ class _$MovieLoadedStateImpl implements _MovieLoadedState {
 }
 
 abstract class _MovieLoadedState implements MovieState {
-  const factory _MovieLoadedState({required final List<MovieEntity> movies}) =
-      _$MovieLoadedStateImpl;
+  const factory _MovieLoadedState(
+      {required final List<MovieEntity> movies,
+      required final bool finalizedMoviesList}) = _$MovieLoadedStateImpl;
 
   List<MovieEntity> get movies;
+  bool get finalizedMoviesList;
   @JsonKey(ignore: true)
   _$$MovieLoadedStateImplCopyWith<_$MovieLoadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -534,8 +607,10 @@ class _$MovieErrorStateImpl implements _MovieErrorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(List<MovieEntity> movies) loaded,
+    required TResult Function(List<MovieEntity>? lastMovies) loading,
+    required TResult Function(
+            List<MovieEntity> movies, bool finalizedMoviesList)
+        loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -545,8 +620,9 @@ class _$MovieErrorStateImpl implements _MovieErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<MovieEntity> movies)? loaded,
+    TResult? Function(List<MovieEntity>? lastMovies)? loading,
+    TResult? Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -556,8 +632,9 @@ class _$MovieErrorStateImpl implements _MovieErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<MovieEntity> movies)? loaded,
+    TResult Function(List<MovieEntity>? lastMovies)? loading,
+    TResult Function(List<MovieEntity> movies, bool finalizedMoviesList)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

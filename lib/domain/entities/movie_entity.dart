@@ -1,3 +1,15 @@
+class MoviesEntity {
+  final int page;
+  final int totalPages;
+  final List<MovieEntity> movies;
+
+  MoviesEntity({
+    required this.movies,
+    required this.page,
+    required this.totalPages,
+  });
+}
+
 class MovieEntity {
   final int id;
   final String title;

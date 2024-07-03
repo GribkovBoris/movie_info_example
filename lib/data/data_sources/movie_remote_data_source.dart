@@ -6,9 +6,9 @@ import 'package:movie_info/core/utils/tmdb_constants.dart';
 import 'package:movie_info/data/models/movie_model/movie_model.dart';
 
 abstract class MovieRemoteDataSource {
-  Future<List<MovieModel>> getPopularMovies();
+  Future<MoviesModel> getPopularMovies({int page = 1});
 
-  Future<List<MovieModel>> searchMovies(String query);
+  Future<MoviesModel> searchMovies(String query, {int page = 1});
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -20,50 +20,42 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     required this.apiRequestParams,
   });
 
-  @override
-  Future<List<MovieModel>> getPopularMovies() async {
-    final url = TmdbConstants.getPopularMoviesUrl();
-    final response = await httpClient.get<dynamic>(
-      url,
-      queryParameters: _getBasicQueryParams(),
-      headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
-    );
+  MoviesModel _parseMoviesResponse(HttpResponse<dynamic> response){
     if (response.statusCode == 200) {
-      return MovieModel.listFromJson(response.data['results'] as List<dynamic>);
+      final moviesModel =
+      MoviesModel.fromJson(response.data as Map<String, dynamic>);
+      return moviesModel;
     } else {
       throw NetworkException();
     }
   }
 
   @override
-  Future<List<MovieModel>> searchMovies(String query) async {
+  Future<MoviesModel> getPopularMovies({int page = 1}) async {
+    final url = TmdbConstants.getPopularMoviesUrl();
+    final response = await httpClient.get<dynamic>(
+      url,
+      queryParameters: {
+        ..._getBasicQueryParams(),
+        'page': page,
+      },
+      headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
+    );
+    return _parseMoviesResponse(response);
+  }
+
+  @override
+  Future<MoviesModel> searchMovies(String query, {int page = 1}) async {
     final response = await httpClient.get<dynamic>(
       TmdbConstants.searchMoviesUrl(),
       queryParameters: {
         ..._getBasicQueryParams(),
         'query': query,
+        'page': page,
       },
       headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
     );
-
-    if (response.statusCode == 200) {
-      final results = response.data['results'] as List<dynamic>;
-      final movies = <MovieModel>[];
-      results.forEach(
-        (movie) {
-          try {
-            final movieMap = movie as Map<String, dynamic>;
-            final movieEntity = MovieModel.fromJson(movieMap);
-            movies.add(movieEntity);
-          } catch (_) {
-            // If the movie details has no required fields - skip it
-          }
-        },
-      );
-      return movies;
-    } else {
-      throw NetworkException();
-    }
+    return _parseMoviesResponse(response);
   }
 
   Map<String, String> _getBasicQueryParams() {

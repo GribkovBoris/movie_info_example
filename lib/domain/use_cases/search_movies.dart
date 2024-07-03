@@ -10,13 +10,13 @@ class SearchMoviesParams {
   SearchMoviesParams({required this.query});
 }
 
-class SearchMovies implements UseCase<List<MovieEntity>, SearchMoviesParams> {
+class SearchMovies implements UseCase<MoviesEntity, SearchMoviesParams> {
   final MovieRepository repository;
 
   SearchMovies(this.repository);
 
   @override
-  Future<Either<Failure, List<MovieEntity>>> call(SearchMoviesParams params) async {
+  Future<Either<Failure, MoviesEntity>> call(SearchMoviesParams params) async {
     return await repository.searchMovies(params.query);
   }
 }
