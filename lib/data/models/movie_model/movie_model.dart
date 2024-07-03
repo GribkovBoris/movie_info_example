@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:movie_info/domain/entities/genres_entity.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
 
 part 'movie_model.g.dart';
@@ -11,7 +10,7 @@ class MovieModel {
   final String overview;
 
   @JsonKey(name: 'poster_path')
-  final String posterPath;
+  final String? posterPath;
 
   @JsonKey(name: 'vote_average')
   final double voteAverage;
@@ -43,7 +42,7 @@ class MovieModel {
         .toList();
   }
 
-  MovieEntity toEntity(List<GenreEntity>? allGenres) {
+  MovieEntity toEntity() {
     return MovieEntity(
       id: id,
       title: title,

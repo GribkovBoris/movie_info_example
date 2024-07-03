@@ -25,16 +25,20 @@ class TmdbConstants {
   static const String searchMoviesEndpoint = '/search/movie';
   static const String movieDetailsEndpoint = '/movie';
   static const String genresEndpoint = '/genre/movie/list';
+  static const String searchMovieEndpoint = '/search/movie';
 
   static String getGenresUrl() => '$baseUrl$genresEndpoint';
 
   static String getPopularMoviesUrl() => '$baseUrl$popularMoviesEndpoint';
 
-  static String getPosterUrl(String posterPath, {TmdbQuality quality = TmdbQuality.original}) =>
+  static String searchMoviesUrl() => '$baseUrl$searchMovieEndpoint';
+
+  static String getPosterUrl(String posterPath,
+          {TmdbPosterQuality quality = TmdbPosterQuality.original}) =>
       '$imageBaseUrl/${quality.name}$posterPath';
 }
 
-enum TmdbQuality {
+enum TmdbPosterQuality {
   w92,
   w154,
   w185,

@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_info/core/utils/tmdb_constants.dart';
-import 'package:movie_info/domain/entities/genres_entity.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
 import 'package:movie_info/presentation/manager/genres_bloc/genres_bloc.dart';
+import 'package:movie_info/presentation/widgets/circular_indicator.dart';
 import 'package:movie_info/presentation/widgets/movie_list_item.dart';
+import 'package:movie_info/presentation/widgets/warning_with_refresh.dart';
 
 const labelRating = 'Рейтинг';
 const labelReleaseDate = 'Дата выхода';
@@ -35,15 +36,24 @@ class MovieDetailsPage extends StatelessWidget {
           children: [
             Hero(
               tag: moviePosterTag(movie.id),
-              child: CachedNetworkImage(
-                imageUrl: TmdbConstants.getPosterUrl(movie.posterPath),
-                placeholder: (context, url) => SizedBox(
-                  width: double.infinity,
-                  child: preloadedImage ??
-                      const Center(child: CircularProgressIndicator()),
-                ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
+              child: Builder(builder: (context) {
+                final posterPath = movie.posterPath;
+                if (posterPath != null) {
+                  return CachedNetworkImage(
+                    imageUrl: TmdbConstants.getPosterUrl(posterPath),
+                    placeholder: (context, url) => SizedBox(
+                      width: double.infinity,
+                      child: preloadedImage ??
+                          const Center(child: CircularProgressIndicator()),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Center(child: Icon(Icons.error)),
+                  );
+                } else {
+                  return const Center(
+                      child: Icon(Icons.movie_creation_outlined));
+                }
+              }),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -69,7 +79,8 @@ class MovieDetailsPage extends StatelessWidget {
                             initial: () {
                               return const SizedBox.shrink();
                             },
-                            loading: _getCircularIndicator,
+                            loading: () =>
+                                const Center(child: CircularIndicator()),
                             loaded: (genres) {
                               final genreStrings = <String>[];
                               movie.genreIds.forEach(
@@ -85,17 +96,21 @@ class MovieDetailsPage extends StatelessWidget {
                               );
                               return Wrap(
                                 children: [
-                                  ...genreStrings.map((e) => Text('$e, '),),
+                                  ...genreStrings.map(
+                                    (e) => Text(
+                                        '$e${genreStrings.last == e ? '' : ', '}'),
+                                  ),
                                 ],
                               );
                             },
                             error: (message) {
-                              return Row(
-                                children: [
-                                  const Text(labelFailedToLoad),
-                                  const SizedBox(width: 8),
-                                  _getCircularIndicator(),
-                                ],
+                              return WarningWithRefresh(
+                                onRefreshPressed: () {
+                                  context.read<GenresBloc>().add(
+                                        const GenresEvent.load(),
+                                      );
+                                },
+                                message: labelFailedToLoad,
                               );
                             },
                           ),
@@ -116,14 +131,6 @@ class MovieDetailsPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _getCircularIndicator() {
-    return const SizedBox(
-      width: 15,
-      height: 15,
-      child: CircularProgressIndicator(),
     );
   }
 }

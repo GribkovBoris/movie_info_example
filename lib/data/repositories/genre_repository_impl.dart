@@ -22,7 +22,7 @@ class GenreRepositoryImpl implements GenreRepository {
       final resultGenres = genreModels.map((model) => model.toEntity()).toList();
       genres = resultGenres;
       return Right(resultGenres);
-    } on NetworkException {
+    } on NetworkException catch (_) {
       return Left(NetworkFailure());
     } catch (e) {
       return Left(NetworkFailure());

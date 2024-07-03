@@ -19,31 +19,24 @@ mixin _$SearchState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)
-        loading,
-    required TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)
-        loaded,
+    required TResult Function() loading,
+    required TResult Function(List<MovieEntity> movies) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult? Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult? Function()? loading,
+    TResult? Function(List<MovieEntity> movies)? loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult Function()? loading,
+    TResult Function(List<MovieEntity> movies)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -132,11 +125,8 @@ class _$SearchInitialStateImpl implements _SearchInitialState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)
-        loading,
-    required TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)
-        loaded,
+    required TResult Function() loading,
+    required TResult Function(List<MovieEntity> movies) loaded,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -146,10 +136,8 @@ class _$SearchInitialStateImpl implements _SearchInitialState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult? Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult? Function()? loading,
+    TResult? Function(List<MovieEntity> movies)? loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -159,10 +147,8 @@ class _$SearchInitialStateImpl implements _SearchInitialState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult Function()? loading,
+    TResult Function(List<MovieEntity> movies)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -219,8 +205,6 @@ abstract class _$$SearchLoadingStateImplCopyWith<$Res> {
   factory _$$SearchLoadingStateImplCopyWith(_$SearchLoadingStateImpl value,
           $Res Function(_$SearchLoadingStateImpl) then) =
       __$$SearchLoadingStateImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<MovieEntity> oldMovies, bool isFirstFetch});
 }
 
 /// @nodoc
@@ -230,111 +214,60 @@ class __$$SearchLoadingStateImplCopyWithImpl<$Res>
   __$$SearchLoadingStateImplCopyWithImpl(_$SearchLoadingStateImpl _value,
       $Res Function(_$SearchLoadingStateImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? oldMovies = null,
-    Object? isFirstFetch = null,
-  }) {
-    return _then(_$SearchLoadingStateImpl(
-      oldMovies: null == oldMovies
-          ? _value._oldMovies
-          : oldMovies // ignore: cast_nullable_to_non_nullable
-              as List<MovieEntity>,
-      isFirstFetch: null == isFirstFetch
-          ? _value.isFirstFetch
-          : isFirstFetch // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$SearchLoadingStateImpl implements _SearchLoadingState {
-  const _$SearchLoadingStateImpl(
-      {required final List<MovieEntity> oldMovies, required this.isFirstFetch})
-      : _oldMovies = oldMovies;
-
-  final List<MovieEntity> _oldMovies;
-  @override
-  List<MovieEntity> get oldMovies {
-    if (_oldMovies is EqualUnmodifiableListView) return _oldMovies;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_oldMovies);
-  }
-
-  @override
-  final bool isFirstFetch;
+  const _$SearchLoadingStateImpl();
 
   @override
   String toString() {
-    return 'SearchState.loading(oldMovies: $oldMovies, isFirstFetch: $isFirstFetch)';
+    return 'SearchState.loading()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SearchLoadingStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._oldMovies, _oldMovies) &&
-            (identical(other.isFirstFetch, isFirstFetch) ||
-                other.isFirstFetch == isFirstFetch));
+        (other.runtimeType == runtimeType && other is _$SearchLoadingStateImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_oldMovies), isFirstFetch);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SearchLoadingStateImplCopyWith<_$SearchLoadingStateImpl> get copyWith =>
-      __$$SearchLoadingStateImplCopyWithImpl<_$SearchLoadingStateImpl>(
-          this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)
-        loading,
-    required TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)
-        loaded,
+    required TResult Function() loading,
+    required TResult Function(List<MovieEntity> movies) loaded,
     required TResult Function(String message) error,
   }) {
-    return loading(oldMovies, isFirstFetch);
+    return loading();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult? Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult? Function()? loading,
+    TResult? Function(List<MovieEntity> movies)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loading?.call(oldMovies, isFirstFetch);
+    return loading?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult Function()? loading,
+    TResult Function(List<MovieEntity> movies)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(oldMovies, isFirstFetch);
+      return loading();
     }
     return orElse();
   }
@@ -378,15 +311,7 @@ class _$SearchLoadingStateImpl implements _SearchLoadingState {
 }
 
 abstract class _SearchLoadingState implements SearchState {
-  const factory _SearchLoadingState(
-      {required final List<MovieEntity> oldMovies,
-      required final bool isFirstFetch}) = _$SearchLoadingStateImpl;
-
-  List<MovieEntity> get oldMovies;
-  bool get isFirstFetch;
-  @JsonKey(ignore: true)
-  _$$SearchLoadingStateImplCopyWith<_$SearchLoadingStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _SearchLoadingState() = _$SearchLoadingStateImpl;
 }
 
 /// @nodoc
@@ -395,7 +320,7 @@ abstract class _$$SearchLoadedStateImplCopyWith<$Res> {
           $Res Function(_$SearchLoadedStateImpl) then) =
       __$$SearchLoadedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String lastQuery, List<MovieEntity> movies, bool hasReachedMax});
+  $Res call({List<MovieEntity> movies});
 }
 
 /// @nodoc
@@ -409,23 +334,13 @@ class __$$SearchLoadedStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? lastQuery = null,
     Object? movies = null,
-    Object? hasReachedMax = null,
   }) {
     return _then(_$SearchLoadedStateImpl(
-      lastQuery: null == lastQuery
-          ? _value.lastQuery
-          : lastQuery // ignore: cast_nullable_to_non_nullable
-              as String,
       movies: null == movies
           ? _value._movies
           : movies // ignore: cast_nullable_to_non_nullable
               as List<MovieEntity>,
-      hasReachedMax: null == hasReachedMax
-          ? _value.hasReachedMax
-          : hasReachedMax // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -433,14 +348,9 @@ class __$$SearchLoadedStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchLoadedStateImpl implements _SearchLoadedState {
-  const _$SearchLoadedStateImpl(
-      {required this.lastQuery,
-      required final List<MovieEntity> movies,
-      this.hasReachedMax = false})
+  const _$SearchLoadedStateImpl({required final List<MovieEntity> movies})
       : _movies = movies;
 
-  @override
-  final String lastQuery;
   final List<MovieEntity> _movies;
   @override
   List<MovieEntity> get movies {
@@ -450,12 +360,8 @@ class _$SearchLoadedStateImpl implements _SearchLoadedState {
   }
 
   @override
-  @JsonKey()
-  final bool hasReachedMax;
-
-  @override
   String toString() {
-    return 'SearchState.loaded(lastQuery: $lastQuery, movies: $movies, hasReachedMax: $hasReachedMax)';
+    return 'SearchState.loaded(movies: $movies)';
   }
 
   @override
@@ -463,16 +369,12 @@ class _$SearchLoadedStateImpl implements _SearchLoadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchLoadedStateImpl &&
-            (identical(other.lastQuery, lastQuery) ||
-                other.lastQuery == lastQuery) &&
-            const DeepCollectionEquality().equals(other._movies, _movies) &&
-            (identical(other.hasReachedMax, hasReachedMax) ||
-                other.hasReachedMax == hasReachedMax));
+            const DeepCollectionEquality().equals(other._movies, _movies));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, lastQuery,
-      const DeepCollectionEquality().hash(_movies), hasReachedMax);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_movies));
 
   @JsonKey(ignore: true)
   @override
@@ -485,42 +387,35 @@ class _$SearchLoadedStateImpl implements _SearchLoadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)
-        loading,
-    required TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)
-        loaded,
+    required TResult Function() loading,
+    required TResult Function(List<MovieEntity> movies) loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(lastQuery, movies, hasReachedMax);
+    return loaded(movies);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult? Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult? Function()? loading,
+    TResult? Function(List<MovieEntity> movies)? loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(lastQuery, movies, hasReachedMax);
+    return loaded?.call(movies);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult Function()? loading,
+    TResult Function(List<MovieEntity> movies)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(lastQuery, movies, hasReachedMax);
+      return loaded(movies);
     }
     return orElse();
   }
@@ -564,14 +459,10 @@ class _$SearchLoadedStateImpl implements _SearchLoadedState {
 }
 
 abstract class _SearchLoadedState implements SearchState {
-  const factory _SearchLoadedState(
-      {required final String lastQuery,
-      required final List<MovieEntity> movies,
-      final bool hasReachedMax}) = _$SearchLoadedStateImpl;
+  const factory _SearchLoadedState({required final List<MovieEntity> movies}) =
+      _$SearchLoadedStateImpl;
 
-  String get lastQuery;
   List<MovieEntity> get movies;
-  bool get hasReachedMax;
   @JsonKey(ignore: true)
   _$$SearchLoadedStateImplCopyWith<_$SearchLoadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -643,11 +534,8 @@ class _$SearchErrorStateImpl implements _SearchErrorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)
-        loading,
-    required TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)
-        loaded,
+    required TResult Function() loading,
+    required TResult Function(List<MovieEntity> movies) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -657,10 +545,8 @@ class _$SearchErrorStateImpl implements _SearchErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
-    TResult? Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult? Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult? Function()? loading,
+    TResult? Function(List<MovieEntity> movies)? loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -670,10 +556,8 @@ class _$SearchErrorStateImpl implements _SearchErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(List<MovieEntity> oldMovies, bool isFirstFetch)? loading,
-    TResult Function(
-            String lastQuery, List<MovieEntity> movies, bool hasReachedMax)?
-        loaded,
+    TResult Function()? loading,
+    TResult Function(List<MovieEntity> movies)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

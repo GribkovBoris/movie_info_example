@@ -17,21 +17,27 @@ class MovieListItem extends StatelessWidget {
     const imageWidth = 80.0;
     const imageHeight = 120.0;
 
-    final image = CachedNetworkImage(
-      imageUrl: TmdbConstants.getPosterUrl(
-        movie.posterPath,
-        quality: TmdbQuality.w92,
-      ),
-      placeholder: (context, url) => const Center(
-        child: SizedBox(
-          width: progressCircleSize,
-          height: progressCircleSize,
-          child: CircularProgressIndicator(),
+    final posterPath = movie.posterPath;
+    Widget image;
+    if (posterPath != null) {
+      image = CachedNetworkImage(
+        imageUrl: TmdbConstants.getPosterUrl(
+          posterPath,
+          quality: TmdbPosterQuality.w92,
         ),
-      ),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
-      fit: BoxFit.fitWidth,
-    );
+        placeholder: (context, url) => const Center(
+          child: SizedBox(
+            width: progressCircleSize,
+            height: progressCircleSize,
+            child: CircularProgressIndicator(),
+          ),
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+        fit: BoxFit.fitWidth,
+      );
+    } else {
+      image = const Icon(Icons.movie_creation_outlined);
+    }
 
     return Card(
       elevation: 2,

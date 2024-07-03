@@ -9,8 +9,6 @@ abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getPopularMovies();
 
   Future<List<MovieModel>> searchMovies(String query);
-
-  Future<MovieModel> getMovieDetails(int id);
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
@@ -28,7 +26,7 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
     print(url);
     final response = await httpClient.get<dynamic>(
       url,
-      queryParameters: {'language': apiRequestParams.localeCode},
+      queryParameters: _getBasicQueryParams(),
       headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
     );
     print(response.data);
@@ -41,32 +39,39 @@ class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
 
   @override
   Future<List<MovieModel>> searchMovies(String query) async {
+    print('searchMovies(String query)');
+    print('url: ${TmdbConstants.searchMoviesUrl()}');
+
     final response = await httpClient.get<dynamic>(
-      '${TmdbConstants.baseUrl}${TmdbConstants.searchMoviesEndpoint}',
-      queryParameters: {'query': query},
+      TmdbConstants.searchMoviesUrl(),
+      queryParameters: {
+        ..._getBasicQueryParams(),
+        'query': query,
+      },
       headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
     );
+    print('response: ${response}');
 
     if (response.statusCode == 200) {
-      return (response.data['results'] as List<dynamic>)
-          .map((movie) => MovieModel.fromJson(movie as Map<String, dynamic>))
-          .toList();
+      final results = response.data['results'] as List<dynamic>;
+      final movies = results.map((movie) {
+        final movieMap = movie as Map<String, dynamic>;
+        try{
+          final movieEntity = MovieModel.fromJson(movieMap);
+          return movieEntity;
+        } catch (e) {
+          print('movie: $movie');
+          print('movieMap: $movieMap');
+          rethrow;
+        }
+      }).toList();
+      return movies;
     } else {
       throw NetworkException();
     }
   }
 
-  @override
-  Future<MovieModel> getMovieDetails(int id) async {
-    final response = await httpClient.get<dynamic>(
-      '${TmdbConstants.baseUrl}${TmdbConstants.movieDetailsEndpoint}/$id',
-      headers: BasicHttpHeaders.getBasicWithToken(apiRequestParams.getApiKey()),
-    );
-
-    if (response.statusCode == 200) {
-      return MovieModel.fromJson(response.data as Map<String, dynamic>);
-    } else {
-      throw NetworkException();
-    }
+  Map<String, String> _getBasicQueryParams() {
+    return {'language': apiRequestParams.localeCode};
   }
 }
