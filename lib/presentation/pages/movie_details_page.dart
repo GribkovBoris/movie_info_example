@@ -4,15 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_info/core/utils/tmdb_constants.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
 import 'package:movie_info/presentation/manager/genres_bloc/genres_bloc.dart';
+import 'package:movie_info/presentation/utils/labels.dart';
 import 'package:movie_info/presentation/widgets/circular_indicator.dart';
 import 'package:movie_info/presentation/widgets/movie_list_item.dart';
 import 'package:movie_info/presentation/widgets/warning_with_refresh.dart';
 
-const labelRating = 'Рейтинг';
-const labelReleaseDate = 'Дата выхода';
-const labelGenres = 'Жанр';
-const labelOverview = 'Описание';
-const labelFailedToLoad = 'Ошибка загрузки';
 
 class MovieDetailsPage extends StatelessWidget {
   final MovieEntity movie;
@@ -68,13 +64,13 @@ class MovieDetailsPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                          '$labelRating: ${movie.voteAverage!.toStringAsFixed(1)}'),
+                          '${Labels.rating}: ${movie.voteAverage!.toStringAsFixed(1)}'),
                     ),
                   if (movie.releaseDate != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                          '$labelReleaseDate: ${movie.releaseDate!.replaceAll('-', '.')}'),
+                          '${Labels.releaseDate}: ${movie.releaseDate!.replaceAll('-', '.')}'),
                     ),
                   if (movie.genreIds != null)
                     Padding(
@@ -89,7 +85,7 @@ class MovieDetailsPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 16.0),
                           child: Text(
-                            '$labelOverview',
+                            '${Labels.overview}',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
@@ -113,7 +109,7 @@ class MovieDetailsPage extends StatelessWidget {
       builder: (context, state) {
         return Wrap(
           children: [
-            const Text('$labelGenres: '),
+            const Text('${Labels.genres}: '),
             state.when(
               initial: () {
                 return const SizedBox.shrink();
@@ -147,7 +143,7 @@ class MovieDetailsPage extends StatelessWidget {
                           const GenresEvent.load(),
                         );
                   },
-                  message: labelFailedToLoad,
+                  message: Labels.failedToLoad,
                 );
               },
             ),

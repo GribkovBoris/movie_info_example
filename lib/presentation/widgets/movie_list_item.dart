@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_info/core/utils/tmdb_constants.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
 import 'package:movie_info/presentation/pages/movie_details_page.dart';
+import 'package:movie_info/presentation/utils/labels.dart';
 
 String moviePosterTag(int id) => 'movie_poster_$id';
 
@@ -81,7 +82,7 @@ class MovieListItem extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                          '$labelRating: ${movie.voteAverage!.toStringAsFixed(1)}',
+                          '${Labels.rating}: ${movie.voteAverage!.toStringAsFixed(1)}',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),

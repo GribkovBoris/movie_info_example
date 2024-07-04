@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_info/domain/entities/movie_entity.dart';
 import 'package:movie_info/presentation/manager/movie_bloc/movie_bloc.dart';
-import 'package:movie_info/presentation/pages/movie_details_page.dart';
+import 'package:movie_info/presentation/utils/labels.dart';
 import 'package:movie_info/presentation/widgets/circular_indicator.dart';
 import 'package:movie_info/presentation/widgets/movies_list.dart';
 import 'package:movie_info/presentation/widgets/warning_with_refresh.dart';
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 onRefreshPressed: () {
                   movieBloc.add(const MovieEvent.loadPopular());
                 },
-                message: labelFailedToLoad,
+                message: Labels.failedToLoad,
               ),
             ),
           );

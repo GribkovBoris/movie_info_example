@@ -3,14 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_info/presentation/manager/genres_bloc/genres_bloc.dart';
 import 'package:movie_info/presentation/manager/movie_bloc/movie_bloc.dart';
 import 'package:movie_info/presentation/manager/search_bloc/search_bloc.dart';
+import 'package:movie_info/presentation/utils/labels.dart';
 
 import 'core/dependency_injection/injection.dart' as di;
 import 'presentation/pages/home_page.dart';
 import 'presentation/pages/search_page.dart';
-
-const labelAppTitle = 'Movie App';
-const labelMainScreenTitle = 'Главный';
-const labelSearchScreenTitle = 'Поиск';
 
 class MainApp extends StatelessWidget {
   @override
@@ -26,7 +23,7 @@ class MainApp extends StatelessWidget {
         }),
       ],
       child: MaterialApp(
-        title: labelAppTitle,
+        title: Labels.appTitle,
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -66,11 +63,11 @@ class _MainPageState extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: labelMainScreenTitle,
+            label: Labels.mainScreenTitle,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: labelSearchScreenTitle,
+            label: Labels.searchScreenTitle,
           ),
         ],
         currentIndex: _selectedIndex,
