@@ -4,8 +4,10 @@ import 'package:movie_info/presentation/manager/genres_bloc/genres_bloc.dart';
 import 'package:movie_info/presentation/manager/movie_bloc/movie_bloc.dart';
 import 'package:movie_info/presentation/manager/search_bloc/search_bloc.dart';
 import 'package:movie_info/presentation/utils/labels.dart';
+import 'package:movie_info/presentation/widgets/api_dialog.dart';
 
 import 'core/dependency_injection/injection.dart' as di;
+import 'core/utils/tmdb_constants.dart';
 import 'presentation/pages/home_page.dart';
 import 'presentation/pages/search_page.dart';
 
@@ -55,6 +57,11 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (TmdbConstants.apiKey.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showApiKeyDialog(context);
+      });
+    }
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
